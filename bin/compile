@@ -234,6 +234,22 @@ fi
 echo "-----> Getting newest list of cabal packages"
 cabal update
 
+echo "-----> Installing source packages from git"
+if [ -z "$SOURCE_PACKAGES" ] ; then
+  echo "-----> No source package defined in .env (export SOURCE_PACKAGES=gitsubmodule)"
+else
+  for SOURCE_PACKAGE in $SOURCE_PACKAGES
+  do
+    echo "-----> adding source" $SOURCE_PACKAGE
+    ADDED_SOURCES=$(cabal sandbox list-sources | grep ^/.*) || true
+    SOURCE_PACKAGE_ABS_PATH=$(readlink -f $SOURCE_PACKAGE)
+    if ! [[ $ADDED_SOURCES =~ $SOURCE_PACKAGE_ABS_PATH ]]; then
+	echo "-----> realy adding source now with new source: " $SOURCE_PACKAGE_ABS_PATH " (old source: " $ADDED_SOURCES ")"
+	cabal sandbox add-source $SOURCE_PACKAGE
+    fi
+  done
+fi
+
 echo "-----> Installing user application"
 cabal configure --disable-library-profiling --disable-executable-profiling --disable-tests --disable-library-coverage --disable-benchmarks --enable-executable-stripping --disable-split-objs || true
 cabal install --only-dependencies --reorder-goals --disable-library-profiling --disable-tests --disable-library-coverage --disable-benchmarks --disable-documentation --disable-split-objs
