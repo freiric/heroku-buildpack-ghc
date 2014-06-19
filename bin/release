@@ -1,0 +1,4 @@
+#!/bin/bash
+# bin/release <build-dir> <cache-dir> <env-dir>
+
+echo "release is not empty"
