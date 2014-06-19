@@ -241,7 +241,7 @@ cabal sandbox init --sandbox $WORKING_HOME/.cabal-sandbox
 if [ -e $CACHE_DIR/.cabal-sandbox ]; then
   echo "-----> Restoring cached cabal sandbox"
   rm -fr $WORKING_HOME/.cabal-sandbox
-  cp -R $CACHE_DIR/.cabal-sandbox $WORKING_HOME
+  cp -a $CACHE_DIR/.cabal-sandbox $WORKING_HOME
 fi
 
 echo "-----> Getting newest list of cabal packages"
@@ -284,7 +284,7 @@ rm -fr $CACHE_DIR/download
 
 echo "-----> Caching latest cabal sandbox"
 rm -fr $CACHE_DIR/.cabal-sandbox
-cp -R $WORKING_HOME/.cabal-sandbox $CACHE_DIR
+cp -a $WORKING_HOME/.cabal-sandbox $CACHE_DIR
 
 echo "-----> Making GHC binaries available to Heroku command line"
 mkdir -p $BUILD_DIR/vendor
