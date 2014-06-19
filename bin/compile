@@ -160,6 +160,19 @@ export LD_LIBRARY_PATH=$LIBRARY_PATH
 export PATH=$WORKING_HOME/vendor/ghc-$GHC_VER/bin:$WORKING_HOME/vendor/cabal-install-$CABAL_VER/bin:$WORKING_HOME/vendor/ghc-utils/bin:$WORKING_HOME/.cabal-sandbox/bin:$PATH
 
 ########## GHC #####################################################
+
+utf8Locale=$(locale -a | grep 'en_US.UTF-8') || true
+if [[ -z  $utf8Locale ]];then
+    echo "-----> installing locale en_US.UTF-8"
+    locale-gen en_US.UTF-8
+    # dpkg-reconfigure locales
+    # export LANGUAGE=en_US.UTF-8
+    # export LANG=en_US.UTF-8
+    # export LC_ALL=en_US.UTF-8
+else
+    echo "-----> locale en_US.UTF-8 already installed"
+fi
+
 if [ ! -e $CACHE_DIR/ghc-$GHC_VER ]; then
   PREBUILT_GHC_URL=$PREBUILT/heroku-ghc-$GHC_VER.tar.gz
   if curl --output /dev/null --silent --head --fail $PREBUILT_GHC_URL; then
