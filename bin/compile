@@ -264,8 +264,11 @@ else
 fi
 
 echo "-----> Installing user application"
+echo "-----> cabal configure"
 cabal configure --disable-library-profiling --disable-executable-profiling --disable-tests --disable-library-coverage --disable-benchmarks --enable-executable-stripping --disable-split-objs || true
+echo "-----> cabal install"
 cabal install --only-dependencies --reorder-goals --disable-library-profiling --disable-tests --disable-library-coverage --disable-benchmarks --disable-documentation --disable-split-objs
+echo "-----> cabal build"
 cabal build -j
 
 # Set context environment variables.
