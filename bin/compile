@@ -281,9 +281,7 @@ rm -fr $CACHE_DIR/download
 
 echo "-----> Caching latest cabal sandbox"
 rm -fr $CACHE_DIR/.cabal-sandbox
-if [ -d $WORKING_HOME/.cabal-sandbox ]; then
-  cp -R $WORKING_HOME/.cabal-sandbox $CACHE_DIR
-fi
+cp -R $WORKING_HOME/.cabal-sandbox $CACHE_DIR
 
 echo "-----> Making GHC binaries available to Heroku command line"
 mkdir -p $BUILD_DIR/vendor
@@ -294,12 +292,7 @@ mv $WORKING_HOME/vendor/ghc-$GHC_VER $BUILD_DIR/vendor
 mv $WORKING_HOME/vendor/cabal-install-$CABAL_VER $BUILD_DIR/vendor
 
 echo "-----> Making cabal config available to Heroku command line"
-if [ -d $WORKING_HOME/.cabal ]; then
-  mv $WORKING_HOME/.cabal $BUILD_DIR
-fi
+mv $WORKING_HOME/.cabal $BUILD_DIR
 
 echo "-----> Making cabal sandbox available to Heroku command line"
-if [ -d $WORKING_HOME/.cabal-sandbox ]; then
-  cp -R $WORKING_HOME/.cabal-sandbox $BUILD_DIR
-fi
-
+cp -R $WORKING_HOME/.cabal-sandbox $BUILD_DIR
