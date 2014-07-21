@@ -17,7 +17,7 @@ then
 fi
 if [[ -z "$CABAL_VER" ]]
 then
-    CABAL_VER=1.20.0.2
+    CABAL_VER=1.20.0.1
 fi
 if [[ -z "$PREBUILT" ]]
 then
