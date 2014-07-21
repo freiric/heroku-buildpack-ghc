@@ -244,9 +244,6 @@ if [ -e $CACHE_DIR/.cabal-sandbox ]; then
   cp -a $CACHE_DIR/.cabal-sandbox $WORKING_HOME
 fi
 
-echo "-----> Getting newest list of cabal packages"
-cabal update
-
 echo "-----> Installing source packages from git"
 if [ -z "$SOURCE_PACKAGES" ] ; then
   echo "-----> No source package defined in .env (export SOURCE_PACKAGES=gitsubmodule)"
@@ -262,6 +259,9 @@ else
     fi
   done
 fi
+
+echo "-----> Getting newest list of cabal packages"
+cabal update
 
 echo "-----> Installing user application"
 echo "-----> cabal configure"
